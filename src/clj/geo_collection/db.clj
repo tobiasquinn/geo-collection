@@ -1,5 +1,6 @@
 (ns geo-collection.db
-  (:require [clojure.java.jdbc :refer :all]))
+  (:require [clojure.java.jdbc :refer :all]
+            [clj-time.local :as tl]))
 
 (def db
   {:classname "org.sqlite.JDBC"
@@ -19,6 +20,6 @@
 
 (defn save-location [data]
   (println "SAVING" data)
-  (insert! db :locations data))
+  (insert! db :locations (assoc data :time (tl/local-now))))
 
 (create-db)

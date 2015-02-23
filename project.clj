@@ -22,7 +22,8 @@
                  [environ "1.0.0"]
                  [cljs-ajax "0.3.10"]
                  [org.clojure/java.jdbc "0.3.6"]
-                 [org.xerial/sqlite-jdbc "3.8.7"]]
+                 [org.xerial/sqlite-jdbc "3.8.7"]
+                 [clj-time "0.9.0"]]
 
   :plugins [
             [lein-cljsbuild "1.0.4"]
