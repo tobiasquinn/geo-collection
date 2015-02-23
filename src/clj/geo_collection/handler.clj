@@ -9,10 +9,7 @@
             [ring.middleware.transit :refer [wrap-transit-body]]))
 
 (defroutes api-routes
-  (POST "/save-position" request (do
-                                   (println request)
-                                   (db/save-location (:body request))
-                                   "SUCCESS")))
+  (POST "/save-position" request (str (db/save-location (:body request)))))
 
 (defroutes web-routes
   (GET "/" [] (render-file "templates/index.html" {:dev (env :dev?)}))

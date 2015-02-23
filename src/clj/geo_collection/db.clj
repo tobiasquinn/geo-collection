@@ -19,7 +19,9 @@
        (catch Exception e (println e))))
 
 (defn save-location [data]
-  (println "SAVING" data)
-  (insert! db :locations (assoc data :time (tl/local-now))))
+  (let [time-now (tl/local-now)]
+    (println "SAVING" data)
+    (insert! db :locations (assoc data :time time-now))
+    time-now))
 
 (create-db)
