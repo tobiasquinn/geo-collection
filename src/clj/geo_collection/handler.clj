@@ -5,11 +5,14 @@
             [selmer.parser :refer [render-file]]
             [prone.middleware :refer [wrap-exceptions]]
             [environ.core :refer [env]]
+            [geo-collection.db :as db]
             [ring.middleware.transit :refer [wrap-transit-body]]))
 
 (defroutes api-routes
-  (POST "/save-position" request (println "REQ:" request)
-        "SUCCESS"))
+  (POST "/save-position" request (do
+                                   (println request)
+                                   (db/save-location (:body request))
+                                   "SUCCESS")))
 
 (defroutes web-routes
   (GET "/" [] (render-file "templates/index.html" {:dev (env :dev?)}))
