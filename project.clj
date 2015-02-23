@@ -20,7 +20,9 @@
                  [compojure "1.3.2"]
                  [selmer "0.8.0"]
                  [environ "1.0.0"]
-                 [cljs-ajax "0.3.10"]]
+                 [cljs-ajax "0.3.10"]
+                 [org.clojure/java.jdbc "0.3.6"]
+                 [org.xerial/sqlite-jdbc "3.8.7"]]
 
   :plugins [
             [lein-cljsbuild "1.0.4"]
