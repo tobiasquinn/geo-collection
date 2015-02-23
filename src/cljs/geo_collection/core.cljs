@@ -4,6 +4,7 @@
               [secretary.core :as secretary :include-macros true]
               [goog.events :as events]
               [goog.history.EventType :as EventType]
+              [ajax.core :refer [POST]]
               [cljsjs.react :as react])
     (:import goog.History))
 
@@ -19,6 +20,17 @@
                                                                  :accuracy (.-accuracy coords)
                                                                  :speed (.-speed coords)}))))))
 
+(defn handler [response]
+  (.log js/console response))
+
+(defn error-handler [{:keys [status status-text]}]
+  (println "ERROR" status status-text))
+;  (js/alert status-text))
+
+(defn save-position []
+  (POST "/save-position" {:params (session/get :location)
+                          :handler handler
+                          :error-handler error-handler}))
 ;; -------------------------
 ;; Views
 
@@ -34,10 +46,11 @@
      [:h4 (str "Accuracy  " (session/get-in [:location :accuracy] "-"))]
      [:h4 (str "Speed     " (session/get-in [:location :speed] "-"))]
      [:input {:type :text
-             :class "col-xs-12 form-control"}]
-    [:button {:class "btn btn-primary btn-block"
-              :type :button} "Save Position"]
-    ]]])
+              :class "col-xs-12 form-control"}]
+     [:button {:class "btn btn-primary btn-block"
+               :type :button
+               :on-click save-position} "Save Position"]
+     ]]])
 
 (defn current-page []
   [:div [(session/get :current-page)]])
