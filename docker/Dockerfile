@@ -7,13 +7,13 @@ RUN apt-get -y install git
 # add app user
 RUN useradd -d /home/app -m -s /bin/bash app
 
+USER app
 # clone
-RUN su app -c \
-"cd /home/app && \
+RUN cd /home/app && \
 git clone https://github.com/tobiasquinn/geo-collection.git && \
 cd geo-collection && \
-git checkout master"
+git checkout master
 
 WORKDIR /home/app/geo-collection
-RUN su app -c "lein uberjar"
-#CMD su app -c "java -jar target/geo-collection-0.1.0-standalone.jar"
+RUN lein uberjar
+CMD java -jar target/geo-collection.jar

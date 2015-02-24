@@ -28,7 +28,7 @@
 ;  (js/alert status-text))
 
 (defn save-position []
-  (POST "/save-position" {:params (session/get :location)
+  (POST "/save-position" {:params (assoc (session/get :location) :description (session/get :description))
                           :handler handler
                           :error-handler error-handler}))
 ;; -------------------------
@@ -46,7 +46,8 @@
      [:h4 (str "Accuracy  " (session/get-in [:location :accuracy] "-"))]
      [:h4 (str "Speed     " (session/get-in [:location :speed] "-"))]
      [:input {:type :text
-              :class "col-xs-12 form-control"}]
+              :class "col-xs-12 form-control"
+              :on-change #(session/put! :description (-> % .-target .-value))} (session/get :description)]
      [:button {:class "btn btn-primary btn-block"
                :type :button
                :on-click save-position} "Save Position"]
