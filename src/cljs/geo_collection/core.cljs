@@ -21,6 +21,7 @@
                                                                  :speed (.-speed coords)}))))))
 
 (defn handler [response]
+  (session/put! :last-time-saved response)
   (.log js/console response))
 
 (defn error-handler [{:keys [status status-text]}]
@@ -51,6 +52,7 @@
      [:button {:class "btn btn-primary btn-block"
                :type :button
                :on-click save-position} "Save Position"]
+     [:h3 {:class "col-xs-12"} (session/get :last-time-saved)]
      ]]])
 
 (defn current-page []
